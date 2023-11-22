@@ -1,0 +1,23 @@
+Base de Conocimiento: BC.txt
+Base de Hechos: BH.txt
+Objetivo: h1
+h1 no está en la base de hechos.
+Regla elegida: R1. Sus antecedentes son: h2 h3. El operador que se va a utilizar es: o.
+h2 está en la base de hechos, FC=0.600000.
+h3 no está en la base de hechos.
+Regla elegida: R3. Sus antecedentes son: h5 h6. El operador que se va a utilizar es: y.
+h5 está en la base de hechos, FC=0.300000.
+h6 está en la base de hechos, FC=0.900000.
+CASO 1: R3. FC=0.300000.
+CASO 3: R3. FC=0.210000.
+Regla elegida: R4. Su antecedente es: h7.
+h7 está en la base de hechos, FC=0.500000.
+CASO 3: R4. FC=-0.250000.
+CASO 2: h3. FC=-0.050633.
+CASO 1: R1. FC=0.600000.
+CASO 3: R1. FC=0.300000.
+Regla elegida: R2. Su antecedente es: h4.
+h4 está en la base de hechos, FC=0.600000.
+CASO 3: R2. FC=0.600000.
+CASO 2: h1. FC=0.720000.
+Objetivo h1 encontrado, FC=0.720000
