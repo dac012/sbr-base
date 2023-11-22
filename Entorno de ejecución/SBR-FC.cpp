@@ -211,7 +211,7 @@ double secondCase(queue<double> fcs, char* goal, FILE* outputFile) {
         } else {
             fc1 = (fc1+fc2)/(1-min(fabs(fc1), fabs(fc2)));
         }
-        fprintf(outputFile, "CASO 2: %s. FC=%f.\n", goal, fc1);
+        fprintf(outputFile, "CASO 2: combinamos dos reglas para llegar al hecho %s. FC=%f.\n", goal, fc1);
     }
     return fc1;
 }
@@ -266,11 +266,11 @@ double verify(char* goal, FILE* outputFile) {
                 fcAux = verify(newGoal, outputFile);
 
                 fc = firstCase(r, fc, fcAux);
-                fprintf(outputFile, "CASO 1: %s. FC=%f.\n", r->name, fc);
+                fprintf(outputFile, "CASO 1: se combinan los antecedentes de la regla %s. FC=%f.\n", r->name, fc);
             }
 
             fc = thirdCase(r, fc);
-            fprintf(outputFile, "CASO 3: %s. FC=%f.\n", r->name, fc);
+            fprintf(outputFile, "CASO 3: se combina la evidencia con la regla %s. FC=%f.\n", r->name, fc);
             setAux.push(fc);
         }
 
