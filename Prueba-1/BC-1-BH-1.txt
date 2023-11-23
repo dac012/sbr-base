@@ -1,5 +1,5 @@
-Base de Conocimiento: BC.txt
-Base de Hechos: BH.txt
+Base de Conocimiento: BC-1.txt
+Base de Hechos: BH-1.txt
 Objetivo: h1
 h1 no está en la base de hechos.
 Regla elegida: R1. Sus antecedentes son: h2 h3. El operador que se va a utilizar es: o.
