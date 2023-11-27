@@ -19,6 +19,7 @@ using namespace std;
 #define AND "y"
 #define OR "o"
 #define OBJECTIVE "Objetivo"
+
 #define TXT_EXTENSION_LENGHT 4
 
 struct ruleRep {
@@ -234,69 +235,66 @@ double verify(char* goal, FILE* outputFile) {
         return goalStruct->fc;
     } else {
         fprintf(outputFile, "%s no está en la base de hechos.\n", goal);
-    }
-    queue<rule> conflictSet = equate(goal);
-    queue<char*> newGoals;
-    char* newGoal;
-    double fc, fcAux;
-    queue<double> setAux;
-    rule r;
-    while(!conflictSet.empty()) {
-        r = solve(conflictSet);
-        fprintf(outputFile, "Regla elegida: %s. ", r->name);
-        if(r->nPre>1) {
-            fprintf(outputFile, "Sus antecedentes son:");
-            for(int i=0; i<r->nPre; i=i+1) {
-                fprintf(outputFile, " %s", r->pre[i]);
+        queue<rule> conflictSet = equate(goal);
+        queue<char*> newGoals;
+        char* newGoal;
+        double fc, fcAux;
+        queue<double> setAux;
+        rule r;
+        while(!conflictSet.empty()) {
+            r = solve(conflictSet);
+            fprintf(outputFile, "Regla elegida: %s. ", r->name);
+            if(r->nPre>1) {
+                fprintf(outputFile, "Sus antecedentes son:");
+                for(int i=0; i<r->nPre; i=i+1) {
+                    fprintf(outputFile, " %s", r->pre[i]);
+                }
+                fprintf(outputFile, ". El operador que se va a utilizar es: %c.\n", r->op);
+            } else {
+                fprintf(outputFile, "Su antecedente es: %s.\n", r->pre[0]);
             }
-            fprintf(outputFile, ". El operador que se va a utilizar es: %c.\n", r->op);
-        } else {
-            fprintf(outputFile, "Su antecedente es: %s.\n", r->pre[0]);
-        }
 
-        conflictSet = removeRule(conflictSet);
-        newGoals = extractPre(r);
+            conflictSet = removeRule(conflictSet);
+            newGoals = extractPre(r);
 
-        newGoal = selectGoal(newGoals);
-        newGoals = removeGoal(newGoals);
-        fc = verify(newGoal, outputFile);
-        while(!newGoals.empty()) {
             newGoal = selectGoal(newGoals);
             newGoals = removeGoal(newGoals);
-            fcAux = verify(newGoal, outputFile);
+            fc = verify(newGoal, outputFile);
+            while(!newGoals.empty()) {
+                newGoal = selectGoal(newGoals);
+                newGoals = removeGoal(newGoals);
+                fcAux = verify(newGoal, outputFile);
 
-            fc = firstCase(r, fc, fcAux);
-            fprintf(outputFile, "CASO 1: se combinan los antecedentes de la regla %s. FC=%f.\n", r->name, fc);
+                fc = firstCase(r, fc, fcAux);
+                fprintf(outputFile, "CASO 1: se combinan los antecedentes de la regla %s. FC=%f.\n", r->name, fc);
+            }
+
+            fc = thirdCase(r, fc);
+            fprintf(outputFile, "CASO 3: se combina la evidencia con la regla %s. FC=%f.\n", r->name, fc);
+            setAux.push(fc);
         }
 
-        fc = thirdCase(r, fc);
-        fprintf(outputFile, "CASO 3: se combina la evidencia con la regla %s. FC=%f.\n", r->name, fc);
-        setAux.push(fc);
+        if(setAux.size()>1) {
+            fc = secondCase(setAux, goal, outputFile);
+        }
+        add(goal, fc);
+        return fc;
     }
-
-    if(setAux.size()>1) {
-        fc = secondCase(setAux, goal, outputFile);
-    }
-    add(goal, fc);
-    return fc;
 }
 
 double backguardRouting(FILE* outputFile) {
     char* goal = (char*) malloc(strlen(objective)*sizeof(char));
+    // ¿¿¿¿ES ESTO REALMENTE NECESARIO????
     strcpy(goal, objective);
     double fc = verify(goal, outputFile);
     free(goal);
     return fc;
 }
 
-void removeTXTextension(char* notExtensionFileName, char* fileName) {
-    char* fileNameCopy;
-    strcpy(fileNameCopy, fileName);
-    printf("hola?");
+void removeTXTextension(char* fileName) {
     int lenght = strlen(fileName);
     if(lenght >= TXT_EXTENSION_LENGHT) {
-        fileNameCopy[lenght-TXT_EXTENSION_LENGHT] = '\0';
-        strcpy(notExtensionFileName, fileNameCopy);
+        fileName[lenght-TXT_EXTENSION_LENGHT] = '\0';
     }
 }
 
@@ -316,16 +314,12 @@ int main(int argc, char **argv) {
     readBC(nameBC);
     readBH(nameBH);
 
-    char notExtensionNameBC[strlen(nameBC)-TXT_EXTENSION_LENGHT + 1];
-    removeTXTextension(notExtensionNameBC, nameBC);
-    printf("%s -> %s\n", nameBC, notExtensionNameBC);
-    char notExtensionNameBH[strlen(nameBH)-TXT_EXTENSION_LENGHT + 1];
-    removeTXTextension(notExtensionNameBH, nameBH);
-    printf("%s -> %s\n", nameBH, notExtensionNameBH);
+    removeTXTextension(nameBC);
+    removeTXTextension(nameBH);
 
-    char* outputFileName = outputNameGenerator(notExtensionNameBC, notExtensionNameBH);
+    char* outputFileName = outputNameGenerator(nameBC, nameBH);
     FILE* outputFile = fopen(outputFileName, "w");
-    fprintf(outputFile, "Base de Conocimiento: %s\nBase de Hechos: %s\nObjetivo: %s\n", nameBC, nameBH, objective);
+    fprintf(outputFile, "Base de Conocimiento: %s.txt\nBase de Hechos: %s.txt\nObjetivo: %s\n", nameBC, nameBH, objective);
 
     double fc = backguardRouting(outputFile);
     fprintf(outputFile, "Objetivo %s encontrado, FC=%f\n", objective, fc);

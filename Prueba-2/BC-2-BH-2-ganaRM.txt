@@ -1,5 +1,5 @@
 Base de Conocimiento: BC-2.txt
-Base de Hechos: BH-2.txt
+Base de Hechos: BH-2-ganaRM.txt
 Objetivo: ganaRM
 ganaRM no está en la base de hechos.
 Regla elegida: R2. Su antecedente es: arbMod.
