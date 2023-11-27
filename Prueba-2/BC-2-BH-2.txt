@@ -5,10 +5,14 @@ ganaRM no está en la base de hechos.
 Regla elegida: R2. Su antecedente es: arbMod.
 arbMod está en la base de hechos, FC=1.000000.
 CASO 3: se combina la evidencia con la regla R2. FC=0.750000.
+Regla elegida: R3. Su antecedente es: publicoMayEST.
+publicoMayEST está en la base de hechos, FC=0.650000.
+CASO 3: se combina la evidencia con la regla R3. FC=-0.260000.
 Regla elegida: R5. Sus antecedentes son: les2pivRM visitanteRM. El operador que se va a utilizar es: y.
 les2pivRM está en la base de hechos, FC=1.000000.
 visitanteRM está en la base de hechos, FC=1.000000.
 CASO 1: se combinan los antecedentes de la regla R5. FC=1.000000.
 CASO 3: se combina la evidencia con la regla R5. FC=-0.100000.
-CASO 2: combinamos dos reglas para llegar al hecho ganaRM. FC=0.722222.
-Objetivo ganaRM encontrado, FC=0.722222
+CASO 2: combinamos dos reglas para llegar al hecho ganaRM. FC=0.662162.
+CASO 2: combinamos dos reglas para llegar al hecho ganaRM. FC=0.624625.
+Objetivo ganaRM encontrado, FC=0.624625

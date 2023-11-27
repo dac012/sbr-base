@@ -289,10 +289,14 @@ double backguardRouting(FILE* outputFile) {
     return fc;
 }
 
-void removeTXTextension(char* fileName) {
+void removeTXTextension(char* notExtensionFileName, char* fileName) {
+    char* fileNameCopy;
+    strcpy(fileNameCopy, fileName);
+    printf("hola?");
     int lenght = strlen(fileName);
     if(lenght >= TXT_EXTENSION_LENGHT) {
-        fileName[lenght-TXT_EXTENSION_LENGHT] = '\0';
+        fileNameCopy[lenght-TXT_EXTENSION_LENGHT] = '\0';
+        strcpy(notExtensionFileName, fileNameCopy);
     }
 }
 
@@ -312,12 +316,12 @@ int main(int argc, char **argv) {
     readBC(nameBC);
     readBH(nameBH);
 
-    char notExtensionNameBC[strlen(nameBC)-4];
-    strcpy(notExtensionNameBC, nameBC);
-    removeTXTextension(notExtensionNameBC);
-    char notExtensionNameBH[strlen(nameBH)-4];
-    strcpy(notExtensionNameBH, nameBH);
-    removeTXTextension(notExtensionNameBH);
+    char notExtensionNameBC[strlen(nameBC)-TXT_EXTENSION_LENGHT + 1];
+    removeTXTextension(notExtensionNameBC, nameBC);
+    printf("%s -> %s\n", nameBC, notExtensionNameBC);
+    char notExtensionNameBH[strlen(nameBH)-TXT_EXTENSION_LENGHT + 1];
+    removeTXTextension(notExtensionNameBH, nameBH);
+    printf("%s -> %s\n", nameBH, notExtensionNameBH);
 
     char* outputFileName = outputNameGenerator(notExtensionNameBC, notExtensionNameBH);
     FILE* outputFile = fopen(outputFileName, "w");
