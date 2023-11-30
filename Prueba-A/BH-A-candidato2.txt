@@ -1,0 +1,10 @@
+7
+veterano, FC=-1
+pocaExp, FC=1
+muchaExp, FC=-1
+siTitulo, FC=1
+noTitulo, FC=-1
+entrevistaFAIL, FC=-1
+entrevistaOK, FC=1
+Objetivo
+competente

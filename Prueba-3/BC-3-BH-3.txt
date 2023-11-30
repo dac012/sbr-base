@@ -1,0 +1,43 @@
+Base de Conocimiento: BC-3.txt
+Base de Hechos: BH-3.txt
+Objetivo: causaAccidente
+
+	causaAccidente no está en la base de hechos. Procedemos a buscarlo.
+
+Regla elegida: R5. Sus antecedentes son: experimentado y noSolo. El operador que se va a utilizar es: y.
+	experimentado no está en la base de hechos. Procedemos a buscarlo.
+
+Regla elegida: R1. Su antecedente es: pocosA.
+	pocosA está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R1. FC=0.500000.
+
+Regla elegida: R2. Su antecedente es: muchosA.
+	muchosA está en la base de hechos, FC=-1.000000.
+	CASO 3: se combina la evidencia con la regla R2. FC=0.000000.
+	CASO 2: combinamos dos reglas para llegar al hecho experimentado. FC=0.500000.
+	noSolo está en la base de hechos, FC=-1.000000.
+	CASO 1: se combinan los antecedentes de la regla R5. FC=-1.000000.
+	CASO 3: se combina la evidencia con la regla R5. FC=-0.000000.
+
+Regla elegida: R6. Su antecedente es: cansado.
+	cansado no está en la base de hechos. Procedemos a buscarlo.
+
+Regla elegida: R3. Su antecedente es: pocasH.
+	pocasH está en la base de hechos, FC=-1.000000.
+	CASO 3: se combina la evidencia con la regla R3. FC=0.000000.
+
+Regla elegida: R4. Su antecedente es: muchasH.
+	muchasH está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R4. FC=1.000000.
+	CASO 2: combinamos dos reglas para llegar al hecho cansado. FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R6. FC=0.500000.
+
+Regla elegida: R7. Sus antecedentes son: joven y alcohol. El operador que se va a utilizar es: y.
+	joven no está en la base de hechos. Procedemos a buscarlo.
+	alcohol está en la base de hechos, FC=0.500000.
+	CASO 1: se combinan los antecedentes de la regla R7. FC=0.000000.
+	CASO 3: se combina la evidencia con la regla R7. FC=0.000000.
+	CASO 2: combinamos dos reglas para llegar al hecho causaAccidente. FC=0.500000.
+	CASO 2: combinamos dos reglas para llegar al hecho causaAccidente. FC=0.500000.
+
+Objetivo causaAccidente encontrado, FC=0.500000

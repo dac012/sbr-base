@@ -1,0 +1,9 @@
+6
+pocosA, FC=1
+muchosA, FC=-1
+muchasH, FC=1
+pocasH, FC=-1
+noSolo, FC=-1
+alcohol, FC=0.5
+Objetivo
+causaAccidente

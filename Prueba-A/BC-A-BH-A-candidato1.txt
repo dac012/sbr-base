@@ -1,0 +1,58 @@
+Base de Conocimiento: BC-A.txt
+Base de Hechos: BH-A-candidato1.txt
+Objetivo: competente
+
+	competente no está en la base de hechos. Procedemos a buscarlo.
+
+Regla elegida: R1. Su antecedente es: muchaExp.
+	muchaExp está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R1. FC=0.400000.
+
+Regla elegida: R2. Su antecedente es: pocaExp.
+	pocaExp está en la base de hechos, FC=-1.000000.
+	CASO 3: se combina la evidencia con la regla R2. FC=-0.000000.
+
+Regla elegida: R3. Su antecedente es: noTitulo.
+	noTitulo está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R3. FC=0.200000.
+
+Regla elegida: R4. Su antecedente es: siTitulo.
+	siTitulo está en la base de hechos, FC=-1.000000.
+	CASO 3: se combina la evidencia con la regla R4. FC=0.000000.
+
+Regla elegida: R5. Su antecedente es: entrevistaOK.
+	entrevistaOK está en la base de hechos, FC=-1.000000.
+	CASO 3: se combina la evidencia con la regla R5. FC=0.000000.
+
+Regla elegida: R6. Su antecedente es: entrevistaFAIL.
+	entrevistaFAIL está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R6. FC=-0.400000.
+
+Regla elegida: R9. Sus antecedentes son: jubilacion y exigente. El operador que se va a utilizar es: o.
+	jubilacion no está en la base de hechos. Procedemos a buscarlo.
+
+Regla elegida: R8. Su antecedente es: veterano.
+	veterano está en la base de hechos, FC=0.700000.
+	CASO 3: se combina la evidencia con la regla R8. FC=0.560000.
+	exigente no está en la base de hechos. Procedemos a buscarlo.
+
+Regla elegida: R7. Su antecedente es: muchaExp.
+	muchaExp está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R7. FC=0.700000.
+	CASO 1: se combinan los antecedentes de la regla R9. FC=0.700000.
+	CASO 3: se combina la evidencia con la regla R9. FC=-0.490000.
+
+Regla elegida: R10. Sus antecedentes son: jubilacion y exigente. El operador que se va a utilizar es: y.
+	jubilacion está en la base de hechos, FC=0.560000.
+	exigente está en la base de hechos, FC=0.700000.
+	CASO 1: se combinan los antecedentes de la regla R10. FC=0.560000.
+	CASO 3: se combina la evidencia con la regla R10. FC=-0.504000.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=0.400000.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=0.520000.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=0.520000.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=0.520000.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=0.200000.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=-0.362500.
+	CASO 2: combinamos dos reglas para llegar al hecho competente. FC=-0.683800.
+
+Objetivo competente encontrado, FC=-0.683800

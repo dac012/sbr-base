@@ -1,16 +1,21 @@
 Base de Conocimiento: BC-2.txt
 Base de Hechos: BH-2-ganaEST.txt
 Objetivo: ganaEST
-ganaEST no está en la base de hechos.
+
+	ganaEST no está en la base de hechos. Procedemos a buscarlo.
+
 Regla elegida: R1. Su antecedente es: arbMod.
-arbMod está en la base de hechos, FC=1.000000.
-CASO 3: se combina la evidencia con la regla R1. FC=0.400000.
+	arbMod está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R1. FC=0.400000.
+
 Regla elegida: R4. Su antecedente es: publicoEqui.
-publicoEqui está en la base de hechos, FC=0.350000.
-CASO 3: se combina la evidencia con la regla R4. FC=-0.192500.
+	publicoEqui está en la base de hechos, FC=0.350000.
+	CASO 3: se combina la evidencia con la regla R4. FC=-0.192500.
+
 Regla elegida: R6. Su antecedente es: les2pivEST.
-les2pivEST está en la base de hechos, FC=1.000000.
-CASO 3: se combina la evidencia con la regla R6. FC=-0.600000.
-CASO 2: combinamos dos reglas para llegar al hecho ganaEST. FC=0.256966.
-CASO 2: combinamos dos reglas para llegar al hecho ganaEST. FC=-0.461667.
+	les2pivEST está en la base de hechos, FC=1.000000.
+	CASO 3: se combina la evidencia con la regla R6. FC=-0.600000.
+	CASO 2: combinamos dos reglas para llegar al hecho ganaEST. FC=0.256966.
+	CASO 2: combinamos dos reglas para llegar al hecho ganaEST. FC=-0.461667.
+
 Objetivo ganaEST encontrado, FC=-0.461667

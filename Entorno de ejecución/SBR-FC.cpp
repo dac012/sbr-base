@@ -22,27 +22,30 @@ using namespace std;
 
 #define TXT_EXTENSION_LENGHT 4
 
+// Estructura que representa una regla.
 struct ruleRep {
-    char* name;
-    int nPre;
-    char* pre[MAX_PRE];
-    char op;
-    char* post;
-    double fc;
+    char* name; // Nombre de la regla.
+    int nPre; // Número de antedecentes.
+    char* pre[MAX_PRE]; // Antecedentes.
+    char op; // Operación que se aplica a los antecedentes.
+    char* post; // Consecuente.
+    double fc; // Factor de certeza.
 };
 typedef struct ruleRep* rule;
-int nRules;
-rule* BC;
+int nRules; // Número de reglas.
+rule* BC; // Base de Conocimiento.
 
+// Estructura que representa un hecho.
 struct factRep {
     char* name;
     double fc;
 };
 typedef struct factRep* fact;
-int nFacts;
-fact* BH;
-char objective[MAX_LENGHT_STRING];
+int nFacts; // Número de hechos.
+fact* BH; // Base de Hechos.
+char objective[MAX_LENGHT_STRING]; // Objetivo que buscar
 
+// Función que se encarga de leer el fichero de la Base de Conocimiento.
 void readBC(char* nameBC) {
     ifstream fichBC(nameBC);
     char linea[MAX_LENGHT_STRING];
@@ -81,18 +84,10 @@ void readBC(char* nameBC) {
         BC[i]->fc = atof(tok);
     }
     fichBC.close();
-
-    /*
-    for(int i=0; i<nRules; i=i+1) {
-        cout << BC[i]->name << ": Si ";
-        for(int j=0; j<((BC[i]->nPre)-1); j++) {
-            cout << BC[i]->pre[j] << " " << BC[j]->op << " ";
-        }
-        cout << BC[i]->pre[(BC[i]->nPre)-1] << " Entonces " << BC[i]->post << ", FC=" << BC[i]->fc << endl;
-    }
-    */
 }
 
+
+// Función que se encarga de leer el fichero de la Base de Hechos.
 void readBH(char* nameBH) {
     ifstream fileBH(nameBH);
     char linea[MAX_LENGHT_STRING];
@@ -114,13 +109,9 @@ void readBH(char* nameBH) {
     fileBH >> linea; // Leemos el objetivo.
     strcpy(objective, linea);
     fileBH.close();
-
-    /*for(int i=0; i<nFacts; i=i+1) {
-        cout << BH[i]->name << ", FC=" << BH[i]->fc << endl;
-    }
-    cout << "Objetivo" << endl << objective << endl;*/
 }
 
+// Función que se encarga de liberar la Base de Conocimiento.
 void freeBC() {
     for(int i=0; i<nRules; i=i+1) {
         free(BC[i]->name);
@@ -133,6 +124,7 @@ void freeBC() {
     free(BC);
 }
 
+// Función que se encarga de liberar la Base de Hechos.
 void freeBH() {
     for(int i=0; i<nFacts; i=i+1) {
         free(BH[i]->name);
@@ -141,6 +133,7 @@ void freeBH() {
     free(BH);
 }
 
+// Función que busca un hecho en la Base de Hechos, si lo encuentra lo devuelve.
 fact contained(char* goal) {
     int i = 0;
     while((i<nFacts)&&(strcmp(goal, BH[i]->name))) {
@@ -153,6 +146,7 @@ fact contained(char* goal) {
     }
 }
 
+// Función que busca en la Base de Conocimiento todas las reglas que tengan como consecuente el hecho que se pasa como parámetro.
 queue<rule> equate(char* goal) {
     queue<rule> conflictSet;
     for(int i=0; i<nRules; i=i+1) {
@@ -163,15 +157,18 @@ queue<rule> equate(char* goal) {
     return conflictSet;
 }
 
+// Función que extrae la siguiente regla de una cola de reglas.
 rule solve(queue<rule> conflictSet) {
     return conflictSet.front();
 }
 
+// Función que borra una regla de una cola de reglas.
 queue<rule> removeRule(queue<rule> conflictSet) {
     conflictSet.pop();
     return conflictSet;
 }
 
+// Función que devuele los antecedentes de una regla pasada como parámetro.
 queue<char*> extractPre(rule r) {
     queue<char*> pres;
     for(int i=0; i<r->nPre; i=i+1) {
@@ -180,15 +177,18 @@ queue<char*> extractPre(rule r) {
     return pres;
 }
 
+// Función que devuelve el siguiente hecho de una cola.
 char* selectGoal(queue<char*> goals) {
     return goals.front();
 }
 
+// Función que borra el siguiente hecho de una cola.
 queue<char*> removeGoal(queue<char*> goals) {
     goals.pop();
     return goals;
 }
 
+// Función que calcula el Factor de Certeza resultante de aplicar el caso 1.
 double firstCase(rule r, double fc1, double fc2) {
     if(r->op=='o') {
         return max(fc1, fc2);
@@ -197,6 +197,7 @@ double firstCase(rule r, double fc1, double fc2) {
     }
 }
 
+// Función que calcula el Factor de Certeza resultante de aplicar el caso 2.
 double secondCase(queue<double> fcs, char* goal, FILE* outputFile) {
     double fc1, fc2;
     fc1 = fcs.front();
@@ -211,15 +212,17 @@ double secondCase(queue<double> fcs, char* goal, FILE* outputFile) {
         } else {
             fc1 = (fc1+fc2)/(1-min(fabs(fc1), fabs(fc2)));
         }
-        fprintf(outputFile, "CASO 2: combinamos dos reglas para llegar al hecho %s. FC=%f.\n", goal, fc1);
+        fprintf(outputFile, "\tCASO 2: combinamos dos reglas para llegar al hecho %s. FC=%f.\n", goal, fc1);
     }
     return fc1;
 }
 
+// Función que calcula el Factor de Certeza resultante de aplicar el caso 3.
 double thirdCase(rule r, double fc) {
     return r->fc * max(0.0, fc);
 }
 
+// Función que añade un nuevo hecho a la Base de Hechos.
 void add(char* goal, double fc) {
     BH[nFacts] = (fact) malloc(sizeof(struct factRep));
     BH[nFacts]->name = (char*) malloc(MAX_LENGHT_FACT*sizeof(char));
@@ -228,13 +231,14 @@ void add(char* goal, double fc) {
     nFacts = nFacts + 1;
 }
 
+// Función que se encarga de calcular el Factor de Certeza de un hecho.
 double verify(char* goal, FILE* outputFile) {
     fact goalStruct = contained(goal);
     if(goalStruct != NULL) {
-        fprintf(outputFile, "%s está en la base de hechos, FC=%f.\n", goalStruct->name, goalStruct->fc);
+        fprintf(outputFile, "\t%s está en la base de hechos, FC=%f.\n", goalStruct->name, goalStruct->fc);
         return goalStruct->fc;
     } else {
-        fprintf(outputFile, "%s no está en la base de hechos.\n", goal);
+        fprintf(outputFile, "\t%s no está en la base de hechos. Procedemos a buscarlo.\n", goal);
         queue<rule> conflictSet = equate(goal);
         queue<char*> newGoals;
         char* newGoal;
@@ -243,11 +247,17 @@ double verify(char* goal, FILE* outputFile) {
         rule r;
         while(!conflictSet.empty()) {
             r = solve(conflictSet);
-            fprintf(outputFile, "Regla elegida: %s. ", r->name);
+            fprintf(outputFile, "\nRegla elegida: %s. ", r->name);
             if(r->nPre>1) {
                 fprintf(outputFile, "Sus antecedentes son:");
                 for(int i=0; i<r->nPre; i=i+1) {
-                    fprintf(outputFile, " %s", r->pre[i]);
+                    if(i==0) {
+                        fprintf(outputFile, " %s", r->pre[i]);
+                    } else if(i==r->nPre-1) {
+                        fprintf(outputFile, " y %s", r->pre[i]);
+                    } else {
+                        fprintf(outputFile, ", %s", r->pre[i]);
+                    }
                 }
                 fprintf(outputFile, ". El operador que se va a utilizar es: %c.\n", r->op);
             } else {
@@ -266,11 +276,11 @@ double verify(char* goal, FILE* outputFile) {
                 fcAux = verify(newGoal, outputFile);
 
                 fc = firstCase(r, fc, fcAux);
-                fprintf(outputFile, "CASO 1: se combinan los antecedentes de la regla %s. FC=%f.\n", r->name, fc);
+                fprintf(outputFile, "\tCASO 1: se combinan los antecedentes de la regla %s. FC=%f.\n", r->name, fc);
             }
 
             fc = thirdCase(r, fc);
-            fprintf(outputFile, "CASO 3: se combina la evidencia con la regla %s. FC=%f.\n", r->name, fc);
+            fprintf(outputFile, "\tCASO 3: se combina la evidencia con la regla %s. FC=%f.\n", r->name, fc);
             setAux.push(fc);
         }
 
@@ -282,15 +292,16 @@ double verify(char* goal, FILE* outputFile) {
     }
 }
 
+// Función encargada de realizar el encaminamiento hacia atrás.
 double backguardRouting(FILE* outputFile) {
     char* goal = (char*) malloc(strlen(objective)*sizeof(char));
-    // ¿¿¿¿ES ESTO REALMENTE NECESARIO????
     strcpy(goal, objective);
     double fc = verify(goal, outputFile);
     free(goal);
     return fc;
 }
 
+// Función que borra la extensión .txt del nombre de un archivo.
 void removeTXTextension(char* fileName) {
     int lenght = strlen(fileName);
     if(lenght >= TXT_EXTENSION_LENGHT) {
@@ -298,6 +309,7 @@ void removeTXTextension(char* fileName) {
     }
 }
 
+// Función que genera el nombre del fichero de salida.
 char* outputNameGenerator(char* BC, char* BH) {
     int outputFileNameLenght = strlen(BC) + strlen(BC) + TXT_EXTENSION_LENGHT + 2*strlen("-");
     char* outputName = (char*) malloc(outputFileNameLenght*sizeof(char));
@@ -308,6 +320,7 @@ char* outputNameGenerator(char* BC, char* BH) {
     return outputName;
 }
 
+// Función main.
 int main(int argc, char **argv) {
     char* nameBC = argv[1];
     char* nameBH = argv[2];
@@ -319,10 +332,10 @@ int main(int argc, char **argv) {
 
     char* outputFileName = outputNameGenerator(nameBC, nameBH);
     FILE* outputFile = fopen(outputFileName, "w");
-    fprintf(outputFile, "Base de Conocimiento: %s.txt\nBase de Hechos: %s.txt\nObjetivo: %s\n", nameBC, nameBH, objective);
+    fprintf(outputFile, "Base de Conocimiento: %s.txt\nBase de Hechos: %s.txt\nObjetivo: %s\n\n", nameBC, nameBH, objective);
 
     double fc = backguardRouting(outputFile);
-    fprintf(outputFile, "Objetivo %s encontrado, FC=%f\n", objective, fc);
+    fprintf(outputFile, "\nObjetivo %s encontrado, FC=%f\n", objective, fc);
 
     freeBC();
     freeBH();

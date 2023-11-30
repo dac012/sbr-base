@@ -1,0 +1,11 @@
+10
+R1: Si muchaExp Entonces competente, FC=0.4
+R2: Si pocaExp Entonces competente, FC=-0.6
+R3: Si noTitulo Entonces competente, FC=0.2
+R4: Si siTitulo Entonces competente, FC=0.5
+R5: Si entrevistaOK Entonces competente, FC=0.7
+R6: Si entrevistaFAIL Entonces competente, FC=-0.4
+R7: Si muchaExp Entonces exigente, FC=0.7
+R8: Si veterano Entonces jubilacion, FC=0.8
+R9: Si jubilacion o exigente Entonces competente, FC=-0.7
+R10: Si jubilacion y exigente Entonces competente, FC=-0.9

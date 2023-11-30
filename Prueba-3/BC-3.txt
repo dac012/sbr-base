@@ -1,0 +1,8 @@
+7
+R1: Si pocosA Entonces experimentado, FC=0.5
+R2: Si muchosA Entonces experimentado, FC=0.9
+R3: Si pocasH Entonces cansado, FC=0.5
+R4: Si muchasH Entonces cansado, FC=1
+R5: Si experimentado y noSolo Entonces causaAccidente, FC=-0.5
+R6: Si cansado Entonces causaAccidente, FC=0.5
+R7: Si joven y alcohol Entonces causaAccidente, FC=0.7
