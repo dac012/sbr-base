@@ -11,9 +11,8 @@ Este repositorio implementa y prueba un **sistema basado en reglas** que permite
 
 ## Estructura del repositorio
 
-- `Prueba-1`, `Prueba-2`, `Prueba-3`: Carpetas con ejemplos de reglas y hechos para diferentes dominios.
-- `BC-*`: Archivos de base de conocimientos con reglas.
-- `BH-*`: Archivos con hechos y objetivos para evaluar con las reglas.
+- `Prueba-1`, `Prueba-2`, `Prueba-3`, `Prueba-A`: Carpetas con ejemplos de reglas y hechos para diferentes dominios y pruebas.
+- `Entorno de ejecución/`: Recursos relacionados con el entorno de ejecución del sistema.
 
 ## Ejemplo de regla
 
